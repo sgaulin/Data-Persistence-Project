@@ -6,12 +6,24 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     private Rigidbody m_Rigidbody;
+    private MainManager m_MainManager;
+    [SerializeField] AudioSource m_AudioSource;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_MainManager = GameObject.FindAnyObjectByType<MainManager>();
+
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(m_MainManager.m_Started)
+        {
+            m_AudioSource.Play();
+        }
+    }
+
     private void OnCollisionExit(Collision other)
     {
         var velocity = m_Rigidbody.velocity;
